@@ -160,10 +160,10 @@ class Dataset_MTS_simplified(Dataset):
          
         s_begin = index * self.stride
         s_end = s_begin + self.in_len
-        #r_begin = s_end
-        #r_end = r_begin + self.out_len
-        r_begin = s_begin
+        r_begin = s_end
         r_end = r_begin + self.out_len
+        #r_begin = s_begin
+        #r_end = r_begin + self.out_len
         
         if r_end > len(self.data_x):
             s_begin = len(self.data_x) - self.in_len - self.out_len
