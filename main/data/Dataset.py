@@ -154,7 +154,7 @@ class Dataset_MTS_simplified(Dataset):
         self.data_x = data[0:data_len]
         self.data_y = data[0:data_len]
     
-        self.total_windows = (len(self.data_x)) // self.stride + 1
+        self.total_windows = self.total_windows = ((data_len - self.in_len - self.out_len) // self.stride) + 1
     
     def __getitem__(self, index):
          
@@ -165,7 +165,7 @@ class Dataset_MTS_simplified(Dataset):
         #r_begin = s_begin
         #r_end = r_begin + self.out_len
         
-        if r_end > len(self.data_x):
+        if s_begin > len(self.data_x):
             s_begin = len(self.data_x) - self.in_len - self.out_len
             s_end = s_begin + self.in_len
             r_begin = s_end
@@ -174,12 +174,12 @@ class Dataset_MTS_simplified(Dataset):
 
         seq_x = self.data_x[s_begin:s_end]
         seq_y = self.data_y[r_begin:r_end]
-
+        print(f"{s_begin},{s_end}")
        
         return seq_x, seq_y
     
     def __len__(self):
-        return len(self.data_x) 
+        return self.total_windows
   
     def get_raw_data_before_split(self):
         return self.df_raw
